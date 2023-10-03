@@ -1,4 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://daixok6wqmi3d"]
+[gd_scene load_steps=10 format=3 uid="uid://daixok6wqmi3d"]
+
+[ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="1_hu18b"]
+[ext_resource type="Script" path="res://scripts/initialize-webxr.gd" id="1_lytcm"]
+[ext_resource type="Material" uid="uid://cch1fggfn87an" path="res://materials/hand_material.tres" id="2_h75ln"]
+[ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="3_ql5pl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o8m5j"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -39,7 +44,20 @@ mesh = SubResource("BoxMesh_rs81o")
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="LeftHand" parent="XROrigin3D/LeftController" instance=ExtResource("1_hu18b")]
+hand_material_override = ExtResource("2_h75ln")
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="RightHand" parent="XROrigin3D/RightController" instance=ExtResource("3_ql5pl")]
+hand_material_override = ExtResource("2_h75ln")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("1_lytcm")
 
 [node name="Button" type="Button" parent="CanvasLayer"]
 anchors_preset = 8
